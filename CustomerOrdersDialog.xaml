@@ -1,0 +1,48 @@
+﻿<Window x:Class="SQL_WPF.CustomerOrdersDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SQL_WPF"
+        mc:Ignorable="d"
+        Title="CustomerOrdersDialog" Height="450" Width="1500" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="контрагентыViewSource" d:DesignSource="{d:DesignInstance {x:Type local:контрагенты}, CreateList=True}"/>
+        <CollectionViewSource x:Key="контрагентызаказыViewSource" Source="{Binding заказы, Source={StaticResource контрагентыViewSource}}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource контрагентыViewSource}">
+        <DataGrid x:Name="заказыDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource контрагентызаказыViewSource}}" Margin="355,56,22,163" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="вид_оплатыColumn" Binding="{Binding вид_оплаты}" Header="вид оплаты" Width="SizeToHeader"/>
+                <DataGridTemplateColumn x:Name="дата_заказаColumn" Header="дата заказа" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding дата_заказа, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="еденицы_измеренияColumn" Binding="{Binding еденицы_измерения}" Header="еденицы измерения" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="код_заказаColumn" Binding="{Binding код_заказа}" Header="код заказа" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="код_контрагентаColumn1" Binding="{Binding код_контрагента}" Header="код контрагента" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="код_поставщикаColumn" Binding="{Binding код_поставщика}" Header="код поставщика" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="код_товараColumn" Binding="{Binding код_товара}" Header="код товара" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="количество_заказанногоColumn" Binding="{Binding количество_заказанного}" Header="количество заказанного" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="наименование_контрагентаColumn" Binding="{Binding наименование_контрагента}" Header="наименование контрагента" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="наименование_поставщикаColumn" Binding="{Binding наименование_поставщика}" Header="наименование поставщика" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="наименование_товараColumn" Binding="{Binding наименование_товара}" Header="наименование товара" Width="SizeToHeader"/>
+                <DataGridCheckBoxColumn x:Name="оплаченоColumn" Binding="{Binding оплачено}" Header="оплачено" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="срок_гарантииColumn" Binding="{Binding срок_гарантии}" Header="срок гарантии" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="ттнColumn" Binding="{Binding ттн}" Header="ттн" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="цена_за_еденицу_бел_рубColumn" Binding="{Binding цена_за_еденицу_бел_руб}" Header="цена за еденицу бел руб" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="контрагентыDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="20,56,1168,163" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="код_контрагентаColumn" Binding="{Binding код_контрагента}" Header="код контрагента" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="наименованиеColumn" Binding="{Binding наименование}" Header="наименование" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="телефонColumn" Binding="{Binding телефон}" Header="телефон" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>

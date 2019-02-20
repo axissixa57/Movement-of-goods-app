@@ -1,0 +1,57 @@
+﻿<Window x:Class="SQL_WPF.WarehouseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SQL_WPF"
+        mc:Ignorable="d"
+        Title="Склад" Height="450" Width="1120" Loaded="Window_Loaded" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <CollectionViewSource x:Key="складViewSource" d:DesignSource="{d:DesignInstance {x:Type local:склад}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource складViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65"/>
+            <RowDefinition />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="СКЛАД" Foreground="#FF2196F3" FontFamily="Impact" FontSize="45" Margin="470,10,470,0"  FontStretch="SemiExpanded" TextDecorations="Underline"/>
+        <DataGrid Grid.Row="1" x:Name="складDataGrid" HorizontalGridLinesBrush="DarkGray" RowBackground="LightGray" AlternatingRowBackground="White" AutoGenerateColumns="False" 
+                  EnableRowVirtualization="false" EnableColumnVirtualization="false" ItemsSource="{Binding}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" Width="1082" MouseDoubleClick="СкладDataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="код_заказаColumn" Binding="{Binding код_заказа}" Header="код заказа" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="код_поставкиColumn" Binding="{Binding код_поставки}" Header="код поставки" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="код_поставщикаColumn" Binding="{Binding код_поставщика}" Header="код поставщика" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="наименование_поставщикаColumn" Binding="{Binding наименование_поставщика}" Header="наименование поставщика" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="код_товараColumn" Binding="{Binding код_товара}" Header="код товара" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="наименование_товараColumn" Binding="{Binding наименование_товара}" Header="наименование товара" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="цена_за_еденицу_бел_рубColumn" Binding="{Binding цена_за_еденицу_бел_руб}" Header="цена" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="еденицы_измеренияColumn" Binding="{Binding еденицы_измерения}" Header="ед." Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="срок_гарантииColumn" Binding="{Binding срок_гарантии}" Header="срок гарант." Width="SizeToHeader"/>
+                <DataGridTemplateColumn x:Name="дата_поступленияColumn" Header="дата поступления" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding дата_поступления, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="количество_поступившегоColumn" Binding="{Binding количество_поступившего}" Header="кол-во" Width="SizeToHeader"/>
+                <DataGridTemplateColumn x:Name="дата_выбытияColumn" Header="дата выбытия" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding дата_выбытия, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="количество_выбывшегоColumn" Binding="{Binding количество_выбывшего}" Header="кол-во" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="263,0,251,0" Width="600">
+            <Button Content="Добавить" Width="100" Margin="10" Click="Button_Click_Add"/>
+            <Button Content="Копия" Width="100" Margin="10" Click="Button_Click_Copy"/>
+            <Button Content="Обновить" Width="100" Margin="10" Click="Button_Click_Update"/>
+            <Button Content="Поиск" Width="100" Margin="10" Click="Button_Click_Search"/>
+            <Button Content="Удалить" Width="100" Margin="10" Click="Button_Click_Delete"/>
+        </StackPanel>
+    </Grid>
+</Window>

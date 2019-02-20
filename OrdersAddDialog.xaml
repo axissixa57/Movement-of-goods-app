@@ -1,0 +1,141 @@
+﻿<Window x:Class="SQL_WPF.OrdersAddDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SQL_WPF"
+        mc:Ignorable="d"
+        Title="Добавление" Height="600" Width="465" Loaded="Window_Loaded" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <CollectionViewSource x:Key="заказыViewSource" d:DesignSource="{d:DesignInstance {x:Type local:заказы}, CreateList=True}"/>
+        <CollectionViewSource x:Key="контрагентыViewSource" d:DesignSource="{d:DesignInstance {x:Type local:контрагенты}, CreateList=True}"/>
+        <CollectionViewSource x:Key="поставщикиViewSource" d:DesignSource="{d:DesignInstance {x:Type local:поставщики}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource заказыViewSource}">
+        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top" Width="434">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="ттн:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBox x:Name="ттнTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="3,4,-125,4" Grid.Row="0" Text="{Binding ттн, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249"/>
+
+            <Label Content="код заказа:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox x:Name="код_заказаTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="3,4,-124,4" Grid.Row="1" Text="{Binding код_заказа, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249"/>
+
+            <Label Content="дата заказа:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+            <DatePicker x:Name="дата_заказаDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3,4,-123,4" Grid.Row="2" SelectedDate="{Binding дата_заказа, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249"/>
+
+            <Label Content="код контрагента:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <!--<TextBox x:Name="код_контрагентаTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="323,22,-431,18" Text="{Binding код_контрагента, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249" Grid.RowSpan="2"/>-->
+
+            <Label Content="наименование контрагента:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+            <!--<TextBox x:Name="наименование_контрагентаTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="323,22,-430,18" Grid.Row="1" Text="{Binding наименование_контрагента, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249" Grid.RowSpan="2"/>-->
+
+            <Label Content="код товара:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+            <!--<TextBox x:Name="код_товараTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="323,14,-429,26" Grid.Row="9" Text="{Binding код_товара, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249" Grid.RowSpan="2"/>-->
+
+            <Label Content="наименование товара:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+            <!--<TextBox x:Name="наименование_товараTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="323,14,-428,26" Grid.Row="10" Text="{Binding наименование_товара, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249" Grid.RowSpan="2"/>-->
+
+            <Label Content="код поставщика:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
+            <!--<TextBox x:Name="код_поставщикаTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="323,14,-427,26" Grid.Row="11" Text="{Binding код_поставщика, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249" Grid.RowSpan="2"/>-->
+
+            <Label Content="наименование поставщика:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
+            <!--<TextBox x:Name="наименование_поставщикаTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="323,11,-426,29" Grid.Row="12" Text="{Binding наименование_поставщика, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249" Grid.RowSpan="2"/>-->
+
+            <Label Content="цена за еденицу бел руб:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="9" VerticalAlignment="Center"/>
+            <TextBox x:Name="цена_за_еденицу_бел_рубTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="3,4,-116,4" Grid.Row="9" Text="{Binding цена_за_еденицу_бел_руб, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249"/>
+
+            <Label Content="еденицы измерения:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="10" VerticalAlignment="Center"/>
+            <TextBox x:Name="еденицы_измеренияTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="3,4,-115,4" Grid.Row="10" Text="{Binding еденицы_измерения, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249"/>
+
+            <Label Content="срок гарантии:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="11" VerticalAlignment="Center"/>
+            <TextBox x:Name="срок_гарантииTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="3,4,-114,4" Grid.Row="11" Text="{Binding срок_гарантии, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249"/>
+
+            <Label Content="количество заказанного:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
+            <TextBox x:Name="количество_заказанногоTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="3,4,-113,4" Grid.Row="12" Text="{Binding количество_заказанного, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249"/>
+
+            <Label Content="оплачено:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="13" VerticalAlignment="Center"/>
+            <CheckBox x:Name="оплаченоCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding оплачено, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Grid.Row="13" VerticalAlignment="Center"/>
+
+            <Label Content="вид оплаты:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="14" VerticalAlignment="Center"/>
+            <TextBox x:Name="вид_оплатыTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="3,4,-112,4" Grid.Row="14" Text="{Binding вид_оплаты, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="249"/>
+        </Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="44,499,51,10" Width="362">
+            <Button Content="Сохранить" Width="100" Margin="10" Click="Button_Click_Save"/>
+            <Button Content="Склад" Width="100" Margin="10" Click="Button_Click_Warehouse"/>
+            <Button Content="Отмена" Width="100" Margin="10" Click="Button_Click_Cancel"/>
+        </StackPanel>
+        <Grid x:Name="grid2" DataContext="{StaticResource контрагентыViewSource}" HorizontalAlignment="Left" Margin="486,140,0,0" VerticalAlignment="Top">
+            <ComboBox x:Name="код_контрагентаComboBox" DisplayMemberPath="код_контрагента" HorizontalAlignment="Left" Height="Auto" ItemsSource="{Binding}" Margin="-299,-28,0,38" VerticalAlignment="Center" Width="249" Grid.Column="1">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <ComboBox x:Name="наименование_контрагентаComboBox" Grid.Column="1" DisplayMemberPath="наименование" HorizontalAlignment="Left" Height="Auto" ItemsSource="{Binding}" Margin="-299,4,0,6" Grid.Row="0" VerticalAlignment="Center" Width="249">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+        </Grid>
+        <Grid x:Name="grid3" DataContext="{StaticResource поставщикиViewSource}" HorizontalAlignment="Left" Margin="486,266,0,0" VerticalAlignment="Top">
+            <ComboBox x:Name="наименование_поставщикаComboBox" Grid.Column="1" DisplayMemberPath="наименование" HorizontalAlignment="Left" Height="22" ItemsSource="{Binding}" Margin="-299,6,0,0" Grid.Row="0" VerticalAlignment="Center" Width="249">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+        </Grid>
+        <Grid x:Name="grid4" DataContext="{StaticResource поставщикиViewSource}" HorizontalAlignment="Left" Margin="486,229,0,0" VerticalAlignment="Top">
+            <ComboBox x:Name="код_поставщикаComboBox" Grid.Column="1" DisplayMemberPath="код_поставщика" HorizontalAlignment="Left" Height="Auto" ItemsSource="{Binding}" Margin="-299,12,0,-6" Grid.Row="0" VerticalAlignment="Center" Width="249
+                      ">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+        </Grid>
+        <Grid x:Name="grid6" DataContext="{StaticResource поставщикиViewSource}" HorizontalAlignment="Left" Margin="504,216,0,0" VerticalAlignment="Top">
+            <ComboBox x:Name="наименование_товараComboBox" Grid.Column="1" DisplayMemberPath="наименование_товара" HorizontalAlignment="Left" Height="Auto" ItemsSource="{Binding}" Margin="-317,-8,0,14" Grid.Row="0" VerticalAlignment="Center" Width="249">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+        </Grid>
+        <Grid x:Name="grid8" DataContext="{StaticResource поставщикиViewSource}" HorizontalAlignment="Left" Margin="587,211,0,0" VerticalAlignment="Top">
+            <ComboBox x:Name="код_товараComboBox" Grid.Column="1" DisplayMemberPath="код_товара" HorizontalAlignment="Left" Height="22" ItemsSource="{Binding}" Margin="-400,-36,0,14" Grid.Row="0" VerticalAlignment="Center" Width="249">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+        </Grid>
+    </Grid>
+</Window>

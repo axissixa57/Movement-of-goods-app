@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="movement_of_goodsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="255" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="заказы">
+          <Key>
+            <PropertyRef Name="ттн" />
+          </Key>
+          <Property Name="ттн" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="код товара" Type="nvarchar" MaxLength="6" />
+          <Property Name="код поставщика" Type="nvarchar" MaxLength="6" />
+          <Property Name="наименование поставщика" Type="nvarchar" MaxLength="255" />
+          <Property Name="код контрагента" Type="nvarchar" MaxLength="6" />
+          <Property Name="наименование контрагента" Type="nvarchar" MaxLength="255" />
+          <Property Name="наименование товара" Type="nvarchar" MaxLength="255" />
+          <Property Name="еденицы измерения" Type="nvarchar" MaxLength="255" />
+          <Property Name="цена за еденицу бел руб" Type="int" />
+          <Property Name="срок гарантии" Type="nvarchar" MaxLength="255" />
+          <Property Name="количество заказанного" Type="float" />
+          <Property Name="оплачено" Type="bit" />
+          <Property Name="вид оплаты" Type="nvarchar" MaxLength="255" />
+          <Property Name="код заказа" Type="nvarchar" MaxLength="3" />
+          <Property Name="дата заказа" Type="datetime" />
+          <Property Name="upsize_ts" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="контрагенты">
+          <Key>
+            <PropertyRef Name="код контрагента" />
+          </Key>
+          <Property Name="код контрагента" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="наименование" Type="nvarchar" MaxLength="255" />
+          <Property Name="адрес" Type="nvarchar" MaxLength="255" />
+          <Property Name="телефон" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="поставщики">
+          <Key>
+            <PropertyRef Name="код поставки" />
+          </Key>
+          <Property Name="код поставки" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="код поставщика" Type="nvarchar" MaxLength="6" />
+          <Property Name="наименование" Type="nvarchar" MaxLength="255" />
+          <Property Name="адрес" Type="nvarchar" MaxLength="255" />
+          <Property Name="телефон" Type="nvarchar" MaxLength="255" />
+          <Property Name="код товара" Type="nvarchar" MaxLength="255" />
+          <Property Name="наименование товара" Type="nvarchar" MaxLength="255" />
+          <Property Name="еденицы измерения" Type="nvarchar" MaxLength="255" />
+          <Property Name="цена за еденицу бел руб" Type="int" />
+          <Property Name="срок гарантии" Type="nvarchar" MaxLength="255" />
+          <Property Name="кол-во поставляемого" Type="int" />
+        </EntityType>
+        <EntityType Name="склад">
+          <Key>
+            <PropertyRef Name="код заказа" />
+          </Key>
+          <Property Name="код заказа" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="код товара" Type="nvarchar" MaxLength="6" />
+          <Property Name="наименование товара" Type="nvarchar" MaxLength="255" />
+          <Property Name="дата поступления" Type="datetime" />
+          <Property Name="количество поступившего" Type="float" />
+          <Property Name="дата выбытия" Type="datetime" />
+          <Property Name="количество выбывшего" Type="float" />
+          <Property Name="еденицы измерения" Type="nvarchar" MaxLength="255" />
+          <Property Name="цена за еденицу бел руб" Type="int" />
+          <Property Name="срок гарантии" Type="nvarchar" MaxLength="255" />
+          <Property Name="код поставщика" Type="nvarchar" MaxLength="255" />
+          <Property Name="наименование поставщика" Type="nvarchar" MaxLength="255" />
+          <Property Name="код поставки" Type="nvarchar" MaxLength="255" />
+          <Property Name="upsize_ts" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <Association Name="заказы_FK00">
+          <End Role="контрагенты" Type="Self.контрагенты" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="заказы" Type="Self.заказы" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="контрагенты">
+              <PropertyRef Name="код контрагента" />
+            </Principal>
+            <Dependent Role="заказы">
+              <PropertyRef Name="код контрагента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="заказы_FK01">
+          <End Role="склад" Type="Self.склад" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="заказы" Type="Self.заказы" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="склад">
+              <PropertyRef Name="код заказа" />
+            </Principal>
+            <Dependent Role="заказы">
+              <PropertyRef Name="код заказа" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="склад_FK00">
+          <End Role="поставщики" Type="Self.поставщики" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="склад" Type="Self.склад" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="поставщики">
+              <PropertyRef Name="код поставки" />
+            </Principal>
+            <Dependent Role="склад">
+              <PropertyRef Name="код поставки" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="movement_of_goodsModelStoreContainer">
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="заказы" EntityType="Self.заказы" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="контрагенты" EntityType="Self.контрагенты" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="поставщики" EntityType="Self.поставщики" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="склад" EntityType="Self.склад" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="заказы_FK00" Association="Self.заказы_FK00">
+            <End Role="контрагенты" EntitySet="контрагенты" />
+            <End Role="заказы" EntitySet="заказы" />
+          </AssociationSet>
+          <AssociationSet Name="заказы_FK01" Association="Self.заказы_FK01">
+            <End Role="склад" EntitySet="склад" />
+            <End Role="заказы" EntitySet="заказы" />
+          </AssociationSet>
+          <AssociationSet Name="склад_FK00" Association="Self.склад_FK00">
+            <End Role="поставщики" EntitySet="поставщики" />
+            <End Role="склад" EntitySet="склад" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="movement_of_goodsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="заказы">
+          <Key>
+            <PropertyRef Name="ттн" />
+          </Key>
+          <Property Name="ттн" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="код_товара" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="код_поставщика" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="наименование_поставщика" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="код_контрагента" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="наименование_контрагента" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="наименование_товара" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="еденицы_измерения" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="цена_за_еденицу_бел_руб" Type="Int32" />
+          <Property Name="срок_гарантии" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="количество_заказанного" Type="Double" />
+          <Property Name="оплачено" Type="Boolean" />
+          <Property Name="вид_оплаты" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="код_заказа" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="дата_заказа" Type="DateTime" Precision="3" />
+          <Property Name="upsize_ts" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="контрагенты" Relationship="Self.заказы_FK00" FromRole="заказы" ToRole="контрагенты" />
+          <NavigationProperty Name="склад" Relationship="Self.заказы_FK01" FromRole="заказы" ToRole="склад" />
+        </EntityType>
+        <EntityType Name="контрагенты">
+          <Key>
+            <PropertyRef Name="код_контрагента" />
+          </Key>
+          <Property Name="код_контрагента" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="наименование" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="адрес" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="телефон" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="заказы" Relationship="Self.заказы_FK00" FromRole="контрагенты" ToRole="заказы" />
+        </EntityType>
+        <EntityType Name="поставщики">
+          <Key>
+            <PropertyRef Name="код_поставки" />
+          </Key>
+          <Property Name="код_поставки" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="код_поставщика" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="наименование" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="адрес" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="телефон" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="код_товара" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="наименование_товара" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="еденицы_измерения" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="цена_за_еденицу_бел_руб" Type="Int32" />
+          <Property Name="срок_гарантии" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="кол_во_поставляемого" Type="Int32" />
+          <NavigationProperty Name="склад" Relationship="Self.склад_FK00" FromRole="поставщики" ToRole="склад" />
+        </EntityType>
+        <EntityType Name="склад">
+          <Key>
+            <PropertyRef Name="код_заказа" />
+          </Key>
+          <Property Name="код_заказа" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="код_товара" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="наименование_товара" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="дата_поступления" Type="DateTime" Precision="3" />
+          <Property Name="количество_поступившего" Type="Double" />
+          <Property Name="дата_выбытия" Type="DateTime" Precision="3" />
+          <Property Name="количество_выбывшего" Type="Double" />
+          <Property Name="еденицы_измерения" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="цена_за_еденицу_бел_руб" Type="Int32" />
+          <Property Name="срок_гарантии" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="код_поставщика" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="наименование_поставщика" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="код_поставки" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="upsize_ts" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="заказы" Relationship="Self.заказы_FK01" FromRole="склад" ToRole="заказы" />
+          <NavigationProperty Name="поставщики" Relationship="Self.склад_FK00" FromRole="склад" ToRole="поставщики" />
+        </EntityType>
+        <Association Name="заказы_FK00">
+          <End Role="контрагенты" Type="Self.контрагенты" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="заказы" Type="Self.заказы" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="контрагенты">
+              <PropertyRef Name="код_контрагента" />
+            </Principal>
+            <Dependent Role="заказы">
+              <PropertyRef Name="код_контрагента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="заказы_FK01">
+          <End Role="склад" Type="Self.склад" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="заказы" Type="Self.заказы" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="склад">
+              <PropertyRef Name="код_заказа" />
+            </Principal>
+            <Dependent Role="заказы">
+              <PropertyRef Name="код_заказа" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="склад_FK00">
+          <End Role="поставщики" Type="Self.поставщики" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="склад" Type="Self.склад" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="поставщики">
+              <PropertyRef Name="код_поставки" />
+            </Principal>
+            <Dependent Role="склад">
+              <PropertyRef Name="код_поставки" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="movement_of_goodsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="заказы" EntityType="Self.заказы" />
+          <EntitySet Name="контрагенты" EntityType="Self.контрагенты" />
+          <EntitySet Name="поставщики" EntityType="Self.поставщики" />
+          <EntitySet Name="склад" EntityType="Self.склад" />
+          <AssociationSet Name="заказы_FK00" Association="Self.заказы_FK00">
+            <End Role="контрагенты" EntitySet="контрагенты" />
+            <End Role="заказы" EntitySet="заказы" />
+          </AssociationSet>
+          <AssociationSet Name="заказы_FK01" Association="Self.заказы_FK01">
+            <End Role="склад" EntitySet="склад" />
+            <End Role="заказы" EntitySet="заказы" />
+          </AssociationSet>
+          <AssociationSet Name="склад_FK00" Association="Self.склад_FK00">
+            <End Role="поставщики" EntitySet="поставщики" />
+            <End Role="склад" EntitySet="склад" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="movement_of_goodsModelStoreContainer" CdmEntityContainer="movement_of_goodsEntities">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="movement_of_goodsModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="заказы">
+            <EntityTypeMapping TypeName="movement_of_goodsModel.заказы">
+              <MappingFragment StoreEntitySet="заказы">
+                <ScalarProperty Name="ттн" ColumnName="ттн" />
+                <ScalarProperty Name="код_товара" ColumnName="код товара" />
+                <ScalarProperty Name="код_поставщика" ColumnName="код поставщика" />
+                <ScalarProperty Name="наименование_поставщика" ColumnName="наименование поставщика" />
+                <ScalarProperty Name="код_контрагента" ColumnName="код контрагента" />
+                <ScalarProperty Name="наименование_контрагента" ColumnName="наименование контрагента" />
+                <ScalarProperty Name="наименование_товара" ColumnName="наименование товара" />
+                <ScalarProperty Name="еденицы_измерения" ColumnName="еденицы измерения" />
+                <ScalarProperty Name="цена_за_еденицу_бел_руб" ColumnName="цена за еденицу бел руб" />
+                <ScalarProperty Name="срок_гарантии" ColumnName="срок гарантии" />
+                <ScalarProperty Name="количество_заказанного" ColumnName="количество заказанного" />
+                <ScalarProperty Name="оплачено" ColumnName="оплачено" />
+                <ScalarProperty Name="вид_оплаты" ColumnName="вид оплаты" />
+                <ScalarProperty Name="код_заказа" ColumnName="код заказа" />
+                <ScalarProperty Name="дата_заказа" ColumnName="дата заказа" />
+                <ScalarProperty Name="upsize_ts" ColumnName="upsize_ts" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="контрагенты">
+            <EntityTypeMapping TypeName="movement_of_goodsModel.контрагенты">
+              <MappingFragment StoreEntitySet="контрагенты">
+                <ScalarProperty Name="код_контрагента" ColumnName="код контрагента" />
+                <ScalarProperty Name="наименование" ColumnName="наименование" />
+                <ScalarProperty Name="адрес" ColumnName="адрес" />
+                <ScalarProperty Name="телефон" ColumnName="телефон" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="поставщики">
+            <EntityTypeMapping TypeName="movement_of_goodsModel.поставщики">
+              <MappingFragment StoreEntitySet="поставщики">
+                <ScalarProperty Name="код_поставки" ColumnName="код поставки" />
+                <ScalarProperty Name="код_поставщика" ColumnName="код поставщика" />
+                <ScalarProperty Name="наименование" ColumnName="наименование" />
+                <ScalarProperty Name="адрес" ColumnName="адрес" />
+                <ScalarProperty Name="телефон" ColumnName="телефон" />
+                <ScalarProperty Name="код_товара" ColumnName="код товара" />
+                <ScalarProperty Name="наименование_товара" ColumnName="наименование товара" />
+                <ScalarProperty Name="еденицы_измерения" ColumnName="еденицы измерения" />
+                <ScalarProperty Name="цена_за_еденицу_бел_руб" ColumnName="цена за еденицу бел руб" />
+                <ScalarProperty Name="срок_гарантии" ColumnName="срок гарантии" />
+                <ScalarProperty Name="кол_во_поставляемого" ColumnName="кол-во поставляемого" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="склад">
+            <EntityTypeMapping TypeName="movement_of_goodsModel.склад">
+              <MappingFragment StoreEntitySet="склад">
+                <ScalarProperty Name="код_заказа" ColumnName="код заказа" />
+                <ScalarProperty Name="код_товара" ColumnName="код товара" />
+                <ScalarProperty Name="наименование_товара" ColumnName="наименование товара" />
+                <ScalarProperty Name="дата_поступления" ColumnName="дата поступления" />
+                <ScalarProperty Name="количество_поступившего" ColumnName="количество поступившего" />
+                <ScalarProperty Name="дата_выбытия" ColumnName="дата выбытия" />
+                <ScalarProperty Name="количество_выбывшего" ColumnName="количество выбывшего" />
+                <ScalarProperty Name="еденицы_измерения" ColumnName="еденицы измерения" />
+                <ScalarProperty Name="цена_за_еденицу_бел_руб" ColumnName="цена за еденицу бел руб" />
+                <ScalarProperty Name="срок_гарантии" ColumnName="срок гарантии" />
+                <ScalarProperty Name="код_поставщика" ColumnName="код поставщика" />
+                <ScalarProperty Name="наименование_поставщика" ColumnName="наименование поставщика" />
+                <ScalarProperty Name="код_поставки" ColumnName="код поставки" />
+                <ScalarProperty Name="upsize_ts" ColumnName="upsize_ts" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

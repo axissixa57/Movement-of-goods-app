@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="139ffdc3ff0b4b639a55170a4357fba5" Name="Diagram1">
+        <EntityTypeShape EntityType="movement_of_goodsModel.User" Width="1.5" PointX="1" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="movement_of_goodsModel.заказы" Width="2.375" PointX="7.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="movement_of_goodsModel.контрагенты" Width="1.5" PointX="10.625" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="movement_of_goodsModel.поставщики" Width="2.125" PointX="1.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="movement_of_goodsModel.склад" Width="2.25" PointX="4.625" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="movement_of_goodsModel.заказы_FK00" ManuallyRouted="false" />
+        <AssociationConnector Association="movement_of_goodsModel.заказы_FK01" ManuallyRouted="false" />
+        <AssociationConnector Association="movement_of_goodsModel.склад_FK00" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
